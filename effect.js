@@ -17,7 +17,8 @@ $('document').ready(function(){
 			$('#b77').animate({top:240, left: vw+3*gap},500);
 		});
 
-	$('#turn_on').click(function(){
+	$('#turn_on').click(function(e){
+		e.preventDefault();
 		$('#bulb_yellow').addClass('bulb-glow-yellow');
 		$('#bulb_red').addClass('bulb-glow-red');
 		$('#bulb_blue').addClass('bulb-glow-blue');
@@ -29,7 +30,8 @@ $('document').ready(function(){
 			$('#play').fadeIn('slow');
 		});
 	});
-	$('#play').click(function(){
+	$('#play').click(function(e){
+		e.preventDefault();
 		var audio = $('.song')[0];
 	audio.play();
 	audio.loop = true; // keep playing throughout the whole experience
@@ -47,7 +49,8 @@ $('document').ready(function(){
 		});
 	});
 
-	$('#bannar_coming').click(function(){
+	$('#bannar_coming').click(function(e){
+		e.preventDefault();
 		$('.bannar').addClass('bannar-come');
 		$(this).fadeOut('slow').delay(6000).promise().done(function(){
 			$('#balloons_flying').fadeIn('slow');
@@ -133,7 +136,8 @@ $('document').ready(function(){
     // Increase this number to make balloons fly longer; set to Infinity for never-stop.
     var MAX_BALLOON_LOOPS = 6;
 
-	$('#balloons_flying').click(function(){
+	$('#balloons_flying').click(function(e){
+		e.preventDefault();
 		$('.balloon-border').animate({top:-500},8000);
 		$('#b1,#b4,#b5,#b7').addClass('balloons-rotate-behaviour-one');
 		$('#b2,#b3,#b6').addClass('balloons-rotate-behaviour-two');
@@ -155,14 +159,16 @@ $('document').ready(function(){
 		});
 	});	
 
-	$('#cake_fadein').click(function(){
+	$('#cake_fadein').click(function(e){
+		e.preventDefault();
 		$('.cake').fadeIn('slow');
 		$(this).fadeOut('slow').delay(3000).promise().done(function(){
 			$('#light_candle').fadeIn('slow');
 		});
 	});
 
-	$('#light_candle').click(function(){
+	$('#light_candle').click(function(e){
+		e.preventDefault();
 		$('.fuego').fadeIn('slow');
 		$(this).fadeOut('slow').promise().done(function(){
 			$('#wish_message').fadeIn('slow');
@@ -170,7 +176,10 @@ $('document').ready(function(){
 	});
 
 		
-	$('#wish_message').click(function(){
+	$('#wish_message').click(function(e){
+		e.preventDefault();
+		if ($(this).data('clicked')) return;
+		$(this).data('clicked', true);
 		// 📱 Screen shake + phone vibration
 		$('body').addClass('shake-it');
 		setTimeout(function(){ $('body').removeClass('shake-it'); }, 700);
@@ -203,7 +212,8 @@ $('document').ready(function(){
 		});
 	});
 	
-	$('#story').click(function(){
+	$('#story').click(function(e){
+		e.preventDefault();
 		$(this).fadeOut('slow');
 		$('.cake').fadeOut('fast').promise().done(function(){
 			$('.message').fadeIn('fast');
@@ -213,19 +223,78 @@ $('document').ready(function(){
 	});
 
 	// --- Surprise photo collage ---
-	$('#not_over').click(function() {
+	$('#not_over').click(function(e) {
+		e.preventDefault();
 		$(this).fadeOut('fast');
-		$('#photo_collage').fadeIn('slow');
-		startSlideshow();
-		shootFireworks(); // 🎆 fireworks on collage open
+
+		// 🌌 THE GALAXY ORCHESTRA (INTERACTIVE)
+		$('#hype_overlay').fadeIn(1000);
+		var bursts = 0;
+		var maxBursts = 5;
+
+		$('#hype_overlay').on('mousedown touchstart', function(e) {
+			if (bursts >= maxBursts) return;
+			
+			var x = e.pageX || (e.originalEvent.touches ? e.originalEvent.touches[0].pageX : 0);
+			var y = e.pageY || (e.originalEvent.touches ? e.originalEvent.touches[0].pageY : 0);
+			
+			if (x === 0 && y === 0) return; // fail safe
+
+			bursts++;
+			$('#burst_num').text(bursts);
+
+			// Celestial Explosion
+			confetti({
+				particleCount: 80,
+				spread: 100,
+				origin: { x: x / window.innerWidth, y: y / window.innerHeight },
+				colors: ['#FF6B9D', '#FFD1E1', '#fff', '#FFB3C8', '#B39DDB'],
+				shapes: ['circle'],
+				scalar: 1.2
+			});
+
+			if (bursts === 2) {
+				$('#magic_hint').fadeOut(500, function() {
+					$(this).text("Beautiful... just like you 🥺").fadeIn(500);
+				});
+			}
+
+			if (bursts === maxBursts) {
+				$('#magic_hint').fadeOut(500, function() {
+					$(this).text("Now, the real gift...").fadeIn(500);
+				});
+				$('#open_heart_btn').delay(800).fadeIn(1000);
+			}
+		});
+
+		$('#open_heart_btn').click(function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			$(this).fadeOut(400);
+			$('#magic_hint, #magic_counter').fadeOut(400);
+
+			// 🚀 HYPER-SPEED TUNNEL EFFECT
+			$('#tunnel_effect').show().animate({opacity: 1}, 800);
+			if (navigator.vibrate) { navigator.vibrate([100, 50, 100, 50, 400]); }
+
+			setTimeout(function() {
+				$('#hype_overlay').fadeOut(1000);
+				$('#photo_collage').fadeIn(1500);
+				
+				setTimeout(function() {
+					startSlideshow();
+					shootFireworks();
+					setTimeout(shootFireworks, 500);
+				}, 500);
+			}, 1200);
+		});
 	});
 
-	// --- wish_message: heart confetti explosion ---
-	$('#wish_message').click(function() {
-		shootHeartConfetti();
-	});
 
+
+	var slideshowInterval;
 	function startSlideshow() {
+		if (slideshowInterval) clearInterval(slideshowInterval);
 		var current = 0;
 		var photos = $('.collage-photo');
 		if (photos.length === 0) return;
@@ -264,7 +333,7 @@ $('document').ready(function(){
 		photos.hide();
 		showPhoto(0);
 
-		setInterval(function() {
+		slideshowInterval = setInterval(function() {
 			$(photos[current]).fadeOut(400, function() {
 				current = (current + 1) % photos.length;
 				showPhoto(current);
@@ -272,7 +341,9 @@ $('document').ready(function(){
 		}, 4000);
 	}
 
-	$('#close_collage').click(function() {
+	$('#close_collage').click(function(e) {
+		e.preventDefault();
+		if (slideshowInterval) clearInterval(slideshowInterval);
 		$('#photo_collage').fadeOut('slow');
 	});
 
@@ -317,9 +388,6 @@ function typewriterLoop(i, paragraphs) {
 	}, speed);
 }
 
-// ============================================
-// 🌸 FALLING PETALS
-// ============================================
 function startFloatingHearts() {
 	var symbols = ['🌸','🌹','🌷','🌺','💕','❤️','✨','💖','⭐','🌸'];
 	// Layer 1: bigger, slower
@@ -328,7 +396,8 @@ function startFloatingHearts() {
 		el.className = 'float-heart';
 		el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
 		el.style.left = Math.random() * 100 + 'vw';
-		el.style.animationDuration = (5 + Math.random() * 4) + 's';
+		p_dur = (5 + Math.random() * 4) + 's';
+		el.style.animationDuration = p_dur;
 		el.style.fontSize = (20 + Math.random() * 14) + 'px';
 		el.style.opacity = '0.8';
 		document.body.appendChild(el);

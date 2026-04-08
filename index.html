@@ -148,31 +148,28 @@
 		<div class="navbar navbar-fixed-bottom">
 			<div class="row">
 				<div class="col-md-6 text-center col-md-offset-3">
-					<button class="btn btn-primary" id="turn_on">✨ Light it Up</button>
-					<button class="btn btn-primary" id="play">🎵 Play Our Song</button>
-					<button class="btn btn-primary" id="bannar_coming">🎀 Decorate!</button>
-					<button class="btn btn-primary" id="balloons_flying">🎈 Fly Balloons!</button>
-					<button class="btn btn-primary" id="cake_fadein">🎂 The Cake!</button>
-					<button class="btn btn-primary" id="light_candle">🕯️ Light the Candle</button>
-					<button class="btn btn-primary" id="wish_message">💕 Happy Birthday Bini!</button>
-					<button class="btn btn-primary" id="story">💌 A letter for you</button>
-					<button class="btn btn-primary" id="not_over">💕 wait... it's not over baby</button>
-					<!-- <button class="btn btn-primary" id="cake_cut">Lrt's Cut the Cake</button> -->
+					<button type="button" class="btn btn-primary" id="turn_on">✨ Light it Up</button>
+					<button type="button" class="btn btn-primary" id="play">🎵 Play Our Song</button>
+					<button type="button" class="btn btn-primary" id="bannar_coming">🎀 Decorate!</button>
+					<button type="button" class="btn btn-primary" id="balloons_flying">🎈 Fly Balloons!</button>
+					<button type="button" class="btn btn-primary" id="cake_fadein">🎂 The Cake!</button>
+					<button type="button" class="btn btn-primary" id="light_candle">🕯️ Light the Candle</button>
+					<button type="button" class="btn btn-primary" id="wish_message">💕 Happy Birthday Bini!</button>
+					<button type="button" class="btn btn-primary" id="story">💌 A letter for you</button>
+					<button type="button" class="btn btn-primary" id="not_over">💕 wait... it's not over baby</button>
 				</div>
 			</div>
-			<!-- <div class="col-md-2">
-			</div>
-			<div class="col-md-2">
-			</div>
-			<div class="col-md-2">
-			</div>
-			<div class="col-md-2">
-			</div>
-			<div class="col-md-2">
-			</div> -->
 		</div>
 
 
+	</div>
+
+	<!-- The Galaxy Orchestra Overlay -->
+	<div id="hype_overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#050008; z-index:100000; overflow:hidden; cursor: crosshair;">
+		<div id="magic_hint" style="position:absolute; top:20%; width:100%; text-align:center; font-family:'Dancing Script', cursive; color:#FFB3C8; font-size:28px; z-index:100005; pointer-events:none; transition: all 1s;">Touch the screen to create magic... ✨</div>
+		<div id="magic_counter" style="position:absolute; bottom:10%; width:100%; text-align:center; color:rgba(255,255,255,0.3); font-size:14px; z-index:100005; pointer-events:none;">Bursts created: <span id="burst_num">0</span>/5</div>
+		<button id="open_heart_btn" style="display:none; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); padding:20px 40px; background:none; border:2px solid #FF6B9D; color:#FF6B9D; border-radius:50px; font-family:'Dancing Script', cursive; font-size:32px; box-shadow: 0 0 30px #FF6B9D; z-index:100010; transition: all 0.3s;">💝 Open My Heart</button>
+		<div id="tunnel_effect" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; z-index:100020; background:radial-gradient(circle, #FFB3C8 0%, #050008 100%); opacity:0;"></div>
 	</div>
 
 	<!-- Photo Collage Surprise Overlay -->
@@ -200,7 +197,7 @@
 			<div id="collage-dots"></div>
 			<p class="collage-caption"><span id="collage-caption-text"></span></p>
 			<p class="collage-end">i love you more than anything ❤️</p>
-			<button id="close_collage">💕 close</button>
+			<button type="button" id="close_collage">💕 close</button>
 		</div>
 	</div>
 
@@ -208,5 +205,4 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="effect.js"></script>
-</script>
 </html>
