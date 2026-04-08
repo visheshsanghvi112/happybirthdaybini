@@ -171,6 +171,12 @@ $('document').ready(function(){
 
 		
 	$('#wish_message').click(function(){
+		// 📱 Screen shake + phone vibration
+		$('body').addClass('shake-it');
+		setTimeout(function(){ $('body').removeClass('shake-it'); }, 700);
+		if (navigator.vibrate) { navigator.vibrate([120, 60, 120, 60, 200]); }
+		shootHeartConfetti();
+
 		 vw = $(window).width()/2;
 		 var gap = Math.min(100, Math.floor(vw * 0.27));
 		$('#b1,#b2,#b3,#b4,#b5,#b6,#b7').stop();
@@ -189,8 +195,10 @@ $('document').ready(function(){
 		$('#b66').animate({top:240, left: vw+2*gap},500);
 		$('#b77').animate({top:240, left: vw+3*gap},500);
 		$('.balloons').css('opacity','0.9');
-		$('.balloons h2').fadeIn(3000);
-		$(this).fadeOut('slow').delay(3000).promise().done(function(){
+		// ✨ Glitch reveal on balloon letters
+		$('.balloons h2').show().addClass('glitch-reveal');
+		setTimeout(function(){ $('.balloons h2').removeClass('glitch-reveal'); }, 1200);
+		$(this).fadeOut('slow').delay(2000).promise().done(function(){
 			$('#story').fadeIn('slow');
 		});
 	});
@@ -198,35 +206,10 @@ $('document').ready(function(){
 	$('#story').click(function(){
 		$(this).fadeOut('slow');
 		$('.cake').fadeOut('fast').promise().done(function(){
-			$('.message').fadeIn('slow');
+			$('.message').fadeIn('fast');
+			var paragraphs = $('.message .col-md-12 p').toArray();
+			typewriterLoop(0, paragraphs);
 		});
-		
-		var totalParagraphs = $('.message p').length;
-
-		function msgLoop (i) {
-			$(".message .col-md-12 p:nth-child("+i+")").fadeOut('slow').delay(800).promise().done(function(){
-			i=i+1;
-			$(".message .col-md-12 p:nth-child("+i+")").fadeIn('slow').delay(1000);
-			if(i > totalParagraphs){
-				$(".message .col-md-12 p:nth-child("+totalParagraphs+")").fadeOut('slow').promise().done(function () {
-					$('.message').fadeOut('fast');
-					$('.cake').fadeIn('fast').promise().done(function() {
-						setTimeout(function() {
-							$('#not_over').fadeIn('slow');
-						}, 2000);
-					});
-				});
-				
-			}
-			else{
-				msgLoop(i);
-			}			
-
-		});
-		}
-		
-		msgLoop(0);
-		
 	});
 
 	// --- Surprise photo collage ---
@@ -263,15 +246,28 @@ $('document').ready(function(){
 			$('#collage-dots .cdot').removeClass('active').eq(idx).addClass('active');
 		}
 
+		// Set random rotation on each photo (polaroid feel)
+		photos.each(function() {
+			var rot = (Math.random() * 10 - 5).toFixed(1);
+			$(this).css('--photo-rot', rot + 'deg');
+		});
+
+		function showPhoto(idx) {
+			var $photo = $(photos[idx]);
+			$photo.css({ transform: 'rotate(var(--photo-rot)) translateY(-80px)', opacity: 0, display: 'block' });
+			$photo.animate({ opacity: 1 }, { duration: 500, step: function(now) {
+				$(this).css('transform', 'rotate(var(--photo-rot)) translateY(' + (-80 + 80*(1-now)) + 'px)');
+			}});
+			updateCaption(idx);
+		}
+
 		photos.hide();
-		$(photos[0]).fadeIn('slow');
-		updateCaption(0);
+		showPhoto(0);
 
 		setInterval(function() {
-			$(photos[current]).fadeOut(600, function() {
+			$(photos[current]).fadeOut(400, function() {
 				current = (current + 1) % photos.length;
-				$(photos[current]).fadeIn(600);
-				updateCaption(current);
+				showPhoto(current);
 			});
 		}, 4000);
 	}
@@ -283,22 +279,73 @@ $('document').ready(function(){
 });
 
 // ============================================
-// 💕 FLOATING HEARTS
+// ⌨️ TYPEWRITER LETTER
+// ============================================
+function typewriterLoop(i, paragraphs) {
+	if (i >= paragraphs.length) {
+		$('.message').fadeOut(600, function() {
+			$('.cake').fadeIn('fast').promise().done(function() {
+				setTimeout(function() {
+					$('#not_over').fadeIn('slow');
+				}, 2000);
+			});
+		});
+		return;
+	}
+	var $p = $(paragraphs[i]);
+	var fullText = $p.data('original') || $p.text().trim();
+	if (!$p.data('original')) $p.data('original', fullText);
+	var chars = [...fullText]; // handles emoji as single char
+	$p.html('<span class="typed-chars"></span><span class="type-cursor">|</span>').show();
+	var $typed = $p.find('.typed-chars');
+	var $cursor = $p.find('.type-cursor');
+	var idx = 0;
+	var speed = Math.max(20, Math.min(40, 1200 / chars.length)); // auto-speed: short lines slower, long lines faster
+	var timer = setInterval(function() {
+		if (idx < chars.length) {
+			$typed.text($typed.text() + chars[idx]);
+			idx++;
+		} else {
+			clearInterval(timer);
+			setTimeout(function() {
+				$cursor.fadeOut(200);
+				$p.fadeOut(300, function() {
+					typewriterLoop(i + 1, paragraphs);
+				});
+			}, 500);
+		}
+	}, speed);
+}
+
+// ============================================
+// 🌸 FALLING PETALS
 // ============================================
 function startFloatingHearts() {
-	var hearts = ['❤️','💕','💗','💖','💝','🌸','✨'];
-	var interval = setInterval(function() {
+	var symbols = ['🌸','🌹','🌷','🌺','💕','❤️','✨','💖','⭐','🌸'];
+	// Layer 1: bigger, slower
+	var slow = setInterval(function() {
 		var el = document.createElement('div');
 		el.className = 'float-heart';
-		el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+		el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
 		el.style.left = Math.random() * 100 + 'vw';
-		el.style.animationDuration = (3 + Math.random() * 3) + 's';
-		el.style.fontSize = (16 + Math.random() * 16) + 'px';
+		el.style.animationDuration = (5 + Math.random() * 4) + 's';
+		el.style.fontSize = (20 + Math.random() * 14) + 'px';
+		el.style.opacity = '0.8';
 		document.body.appendChild(el);
-		setTimeout(function() { el.remove(); }, 6000);
-	}, 600);
-	// stop spawning after 2 mins (plenty for the experience)
-	setTimeout(function() { clearInterval(interval); }, 120000);
+		setTimeout(function() { el.remove(); }, 9000);
+	}, 700);
+	// Layer 2: smaller, faster
+	var fast = setInterval(function() {
+		var el = document.createElement('div');
+		el.className = 'float-heart';
+		el.textContent = ['💕','✨','🌸'][Math.floor(Math.random()*3)];
+		el.style.left = Math.random() * 100 + 'vw';
+		el.style.animationDuration = (2.5 + Math.random() * 2) + 's';
+		el.style.fontSize = (12 + Math.random() * 10) + 'px';
+		document.body.appendChild(el);
+		setTimeout(function() { el.remove(); }, 4500);
+	}, 350);
+	setTimeout(function() { clearInterval(slow); clearInterval(fast); }, 120000);
 }
 
 // ============================================
