@@ -1260,7 +1260,7 @@ audio {
 	bottom: 0;
 	padding:10px 0px 10px 0px;
 }
-#play, #bannar_coming, #balloons_flying,#cake_fadein,#light_candle,#wish_message,#story {
+#play, #bannar_coming, #balloons_flying,#cake_fadein,#light_candle,#wish_message,#story,#not_over {
 	display: none;
 }
 
@@ -1515,7 +1515,6 @@ audio {
         white-space: nowrap;
     }
     .btn-primary {
-        display: inline-block !important;
         padding: 8px 12px !important;
         font-size: 12px !important;
         border-radius: 20px !important;
