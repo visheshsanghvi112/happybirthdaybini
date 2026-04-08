@@ -12,7 +12,7 @@ body {
 	display: none;
 }
 .peach {
-	background-color: #FFDAB9;
+	background-color: #FFE4EE;
 	
 }
 .peach-after {
@@ -25,90 +25,90 @@ body {
 
 @-webkit-keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #FFD1DC;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #FFF0F5;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 }
 @-moz-keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #FFD1DC;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #FFF0F5;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 }
 
 @-o-keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #FFD1DC;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #FFF0F5;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 }
 
 @-ms-keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #FFD1DC;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #FFF0F5;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 }
 
 @keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #FFD1DC;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #FFF0F5;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #FFE4EE;
 	}
 }
 
@@ -1056,7 +1056,7 @@ audio {
 	100% {
 		-ms-transform:translate(0px,0px);
 	}
-}o
+}
 @keyframes bannar_come {
 	0%{
 		transform:translate(0px,-1000px);
@@ -1087,10 +1087,10 @@ audio {
 }
 .balloons h2 {
 	text-transform: uppercase;
-	font-family: 'Signika', sans-serif;
-	font-size: 50px;
-	color: #BF4136;
-	text-shadow: 5px 5px 5px #FFF;
+	font-family: 'Dancing Script', cursive;
+	font-size: 54px;
+	color: #FF4477;
+	text-shadow: 3px 3px 8px rgba(255,100,150,0.5);
 	display: none;
 }
 #b1,#b11 {
@@ -1270,25 +1270,32 @@ audio {
 .message {
 	margin-top: 200px;
 	display: none;
+	text-align: center;
 }
 .message p {
-	font-family: 'Signika', sans-serif;
-	font-size: 30px;
-	text-transform: uppercase;
-	color: #C4515C;
-	text-shadow: 2px 2px 2px #FFF;
+	font-family: 'Dancing Script', cursive;
+	font-size: 34px;
+	text-transform: none;
+	color: #C2255C;
+	text-shadow: 1px 1px 6px rgba(255,100,150,0.3);
 	display: none;
-	font-weight: bold;
+	font-weight: 700;
+	letter-spacing: 0.5px;
 }
 
 .btn-primary {
-        border-color: #466baf;
-        padding: 10px;
+        border-color: #e05580;
+        padding: 10px 16px;
         text-transform: uppercase;
-        font-family: 'Signika', sans-serif;
+        font-family: 'Dancing Script', cursive;
         font-weight: 700;
+        font-size: 15px;
         color: #fff;
-        background-color: #466baf;
+        background-color: #e05580;
+        border-radius: 25px;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(224,85,128,0.3);
 }
     .btn-primary:hover,
     .btn-primary:focus,
@@ -1297,7 +1304,9 @@ audio {
     .open .dropdown-toggle.btn-primary {
         border-color: #fff;
         color: #fff;
-        background-color: #466baf;
+        background-color: #c23b6a;
+        box-shadow: 0 6px 20px rgba(224,85,128,0.5);
+        transform: translateY(-2px);
     }
 
 
@@ -1308,3 +1317,201 @@ audio {
     		-webkit-transform: scale(0.9);
     	}
     }*/
+
+/* === SURPRISE PHOTO COLLAGE === */
+#not_over {
+    display: none;
+    font-size: 18px !important;
+    animation: pulse_love 1.5s ease-in-out infinite;
+}
+@keyframes pulse_love {
+    0%   { transform: scale(1); box-shadow: 0 4px 15px rgba(224,85,128,0.3); }
+    50%  { transform: scale(1.06); box-shadow: 0 8px 30px rgba(224,85,128,0.7); }
+    100% { transform: scale(1); box-shadow: 0 4px 15px rgba(224,85,128,0.3); }
+}
+
+#photo_collage {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #0d0010 0%, #1a0020 50%, #0d0010 100%);
+    z-index: 99999;
+    overflow-y: auto;
+}
+
+/* Floating hearts background */
+#photo_collage::before {
+    content: '❤️ 💕 💗 💖 💝 ❤️ 💕 💗';
+    position: fixed;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    font-size: 24px;
+    letter-spacing: 60px;
+    animation: float_hearts 8s linear infinite;
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: 0;
+}
+@keyframes float_hearts {
+    0%   { transform: translateY(0); opacity: 0.1; }
+    50%  { opacity: 0.2; }
+    100% { transform: translateY(110vh); opacity: 0; }
+}
+
+.collage-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 20px 60px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+.collage-header h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 72px;
+    color: #FF6B9D;
+    margin-bottom: 6px;
+    animation: glow_title 2s ease-in-out infinite alternate;
+}
+@keyframes glow_title {
+    from { text-shadow: 0 0 20px rgba(255,107,157,0.5); }
+    to   { text-shadow: 0 0 60px rgba(255,107,157,1), 0 0 100px rgba(255,50,120,0.5); }
+}
+.collage-sub {
+    font-family: 'Dancing Script', cursive;
+    font-size: 22px;
+    color: #FFB3C8;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+}
+.collage-frame {
+    position: relative;
+    width: min(480px, 90vw);
+    height: min(520px, 75vw);
+    margin: 0 auto 16px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 0 6px #fff, 0 20px 60px rgba(255,107,157,0.5);
+}
+.collage-photo {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+}
+/* Dot indicators */
+#collage-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 14px 0 8px;
+}
+.cdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,107,157,0.3);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.cdot.active {
+    background: #FF6B9D;
+    transform: scale(1.4);
+    box-shadow: 0 0 8px rgba(255,107,157,0.8);
+}
+.collage-caption {
+    font-family: 'Dancing Script', cursive;
+    font-size: 28px;
+    color: #FF6B9D;
+    min-height: 40px;
+    margin: 4px 0 2px;
+    letter-spacing: 0.5px;
+}
+.collage-end {
+    font-family: 'Dancing Script', cursive;
+    font-size: 20px;
+    color: rgba(255,179,200,0.7);
+    margin-bottom: 20px;
+}
+#close_collage {
+    margin-top: 8px;
+    background: transparent;
+    border: 2px solid #FF6B9D;
+    color: #FF6B9D;
+    font-family: 'Dancing Script', cursive;
+    font-size: 18px;
+    padding: 8px 28px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+#close_collage:hover {
+    background: #FF6B9D;
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(255,107,157,0.5);
+}
+
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
+@media only screen and (max-width: 768px) {
+
+    /* Navbar buttons — smaller, wrap nicely */
+    .navbar.navbar-fixed-bottom {
+        padding: 6px 4px;
+    }
+    .btn-primary {
+        padding: 7px 10px !important;
+        font-size: 12px !important;
+        border-radius: 18px !important;
+        margin: 3px 2px !important;
+    }
+    #not_over {
+        font-size: 13px !important;
+    }
+
+    /* Message text — smaller on mobile */
+    .message {
+        margin-top: 120px;
+    }
+    .message p {
+        font-size: 24px;
+    }
+
+    /* Balloon letters */
+    .balloons h2 {
+        font-size: 38px;
+    }
+    .balloons {
+        width: 70px;
+        height: 128px;
+        background-size: 70px 128px;
+    }
+
+    /* Collage */
+    .collage-header h1 {
+        font-size: 48px;
+    }
+    .collage-sub {
+        font-size: 17px;
+        margin-bottom: 16px;
+    }
+    .collage-caption {
+        font-size: 22px;
+    }
+    .collage-end {
+        font-size: 16px;
+    }
+
+    /* Cake area */
+    .cake-cover {
+        margin-top: 120px;
+    }
+}

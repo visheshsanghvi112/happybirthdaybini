@@ -30,7 +30,8 @@ $('document').ready(function(){
 	});
 	$('#play').click(function(){
 		var audio = $('.song')[0];
-        audio.play();
+	audio.play();
+	audio.loop = true; // keep playing throughout the whole experience
         $('#bulb_yellow').addClass('bulb-glow-yellow-after');
 		$('#bulb_red').addClass('bulb-glow-red-after');
 		$('#bulb_blue').addClass('bulb-glow-blue-after');
@@ -55,35 +56,50 @@ $('document').ready(function(){
 		var randleft = 1000*Math.random();
 		var randtop = 500*Math.random();
 		$('#b1').animate({left:randleft,bottom:randtop},10000,function(){
-			loopOne();
+			balloonLoopCounts.b1++;
+			if (balloonLoopCounts.b1 < MAX_BALLOON_LOOPS) {
+				loopOne();
+			}
 		});
 	}
 	function loopTwo() {
 		var randleft = 1000*Math.random();
 		var randtop = 500*Math.random();
 		$('#b2').animate({left:randleft,bottom:randtop},10000,function(){
-			loopTwo();
+			balloonLoopCounts.b2++;
+			if (balloonLoopCounts.b2 < MAX_BALLOON_LOOPS) {
+				loopTwo();
+			}
 		});
 	}
 	function loopThree() {
 		var randleft = 1000*Math.random();
 		var randtop = 500*Math.random();
 		$('#b3').animate({left:randleft,bottom:randtop},10000,function(){
-			loopThree();
+			balloonLoopCounts.b3++;
+			if (balloonLoopCounts.b3 < MAX_BALLOON_LOOPS) {
+				loopThree();
+			}
 		});
 	}
 	function loopFour() {
 		var randleft = 1000*Math.random();
 		var randtop = 500*Math.random();
 		$('#b4').animate({left:randleft,bottom:randtop},10000,function(){
-			loopFour();
+			balloonLoopCounts.b4++;
+			if (balloonLoopCounts.b4 < MAX_BALLOON_LOOPS) {
+				loopFour();
+			}
 		});
 	}
 	function loopFive() {
 		var randleft = 1000*Math.random();
 		var randtop = 500*Math.random();
 		$('#b5').animate({left:randleft,bottom:randtop},10000,function(){
-			loopFive();
+			balloonLoopCounts.b5++;
+			if (balloonLoopCounts.b5 < MAX_BALLOON_LOOPS) {
+				loopFive();
+			}
 		});
 	}
 
@@ -91,16 +107,29 @@ $('document').ready(function(){
 		var randleft = 1000*Math.random();
 		var randtop = 500*Math.random();
 		$('#b6').animate({left:randleft,bottom:randtop},10000,function(){
-			loopSix();
+			balloonLoopCounts.b6++;
+			if (balloonLoopCounts.b6 < MAX_BALLOON_LOOPS) {
+				loopSix();
+			}
 		});
 	}
 	function loopSeven() {
 		var randleft = 1000*Math.random();
 		var randtop = 500*Math.random();
 		$('#b7').animate({left:randleft,bottom:randtop},10000,function(){
-			loopSeven();
+			balloonLoopCounts.b7++;
+			if (balloonLoopCounts.b7 < MAX_BALLOON_LOOPS) {
+				loopSeven();
+			}
 		});
 	}
+
+    // --- Balloon loop control variables ---
+    // Counts how many times each balloon has completed an animated move.
+    var balloonLoopCounts = {b1:0,b2:0,b3:0,b4:0,b5:0,b6:0,b7:0};
+    // Configure how many moves each balloon should make before stopping.
+    // Increase this number to make balloons fly longer; set to Infinity for never-stop.
+    var MAX_BALLOON_LOOPS = 6;
 
 	$('#balloons_flying').click(function(){
 		$('.balloon-border').animate({top:-500},8000);
@@ -170,15 +199,20 @@ $('document').ready(function(){
 			$('.message').fadeIn('slow');
 		});
 		
-		var i;
+		var totalParagraphs = $('.message p').length;
 
 		function msgLoop (i) {
-			$("p:nth-child("+i+")").fadeOut('slow').delay(800).promise().done(function(){
+			$(".message .col-md-12 p:nth-child("+i+")").fadeOut('slow').delay(800).promise().done(function(){
 			i=i+1;
-			$("p:nth-child("+i+")").fadeIn('slow').delay(1000);
-			if(i==50){
-				$("p:nth-child(49)").fadeOut('slow').promise().done(function () {
-					$('.cake').fadeIn('fast');
+			$(".message .col-md-12 p:nth-child("+i+")").fadeIn('slow').delay(1000);
+			if(i > totalParagraphs){
+				$(".message .col-md-12 p:nth-child("+totalParagraphs+")").fadeOut('slow').promise().done(function () {
+					$('.message').fadeOut('fast');
+					$('.cake').fadeIn('fast').promise().done(function() {
+						setTimeout(function() {
+							$('#not_over').fadeIn('slow');
+						}, 2000);
+					});
 				});
 				
 			}
@@ -187,12 +221,57 @@ $('document').ready(function(){
 			}			
 
 		});
-			// body...
 		}
 		
 		msgLoop(0);
 		
 	});
+
+	// --- Surprise photo collage ---
+	$('#not_over').click(function() {
+		$(this).fadeOut('fast');
+		$('#photo_collage').fadeIn('slow');
+		startSlideshow();
+	});
+
+	function startSlideshow() {
+		var current = 0;
+		var photos = $('.collage-photo');
+		if (photos.length === 0) return;
+
+		// Build dot indicators
+		var dotsContainer = $('#collage-dots');
+		dotsContainer.empty();
+		for (var d = 0; d < photos.length; d++) {
+			dotsContainer.append('<span class="cdot' + (d === 0 ? ' active' : '') + '"></span>');
+		}
+
+		// Show captions
+		function updateCaption(idx) {
+			var cap = $(photos[idx]).data('caption') || '';
+			$('#collage-caption-text').fadeOut(200, function() {
+				$(this).text(cap).fadeIn(200);
+			});
+			$('#collage-dots .cdot').removeClass('active').eq(idx).addClass('active');
+		}
+
+		photos.hide();
+		$(photos[0]).fadeIn('slow');
+		updateCaption(0);
+
+		setInterval(function() {
+			$(photos[current]).fadeOut(600, function() {
+				current = (current + 1) % photos.length;
+				$(photos[current]).fadeIn(600);
+				updateCaption(current);
+			});
+		}, 4000);
+	}
+
+	$('#close_collage').click(function() {
+		$('#photo_collage').fadeOut('slow');
+	});
+
 });
 
 
