@@ -32,6 +32,7 @@ $('document').ready(function(){
 		var audio = $('.song')[0];
 	audio.play();
 	audio.loop = true; // keep playing throughout the whole experience
+	startFloatingHearts(); // 💕 hearts float up during music
         $('#bulb_yellow').addClass('bulb-glow-yellow-after');
 		$('#bulb_red').addClass('bulb-glow-red-after');
 		$('#bulb_blue').addClass('bulb-glow-blue-after');
@@ -232,6 +233,12 @@ $('document').ready(function(){
 		$(this).fadeOut('fast');
 		$('#photo_collage').fadeIn('slow');
 		startSlideshow();
+		shootFireworks(); // 🎆 fireworks on collage open
+	});
+
+	// --- wish_message: heart confetti explosion ---
+	$('#wish_message').click(function() {
+		shootHeartConfetti();
 	});
 
 	function startSlideshow() {
@@ -273,6 +280,79 @@ $('document').ready(function(){
 	});
 
 });
+
+// ============================================
+// 💕 FLOATING HEARTS
+// ============================================
+function startFloatingHearts() {
+	var hearts = ['❤️','💕','💗','💖','💝','🌸','✨'];
+	var interval = setInterval(function() {
+		var el = document.createElement('div');
+		el.className = 'float-heart';
+		el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+		el.style.left = Math.random() * 100 + 'vw';
+		el.style.animationDuration = (3 + Math.random() * 3) + 's';
+		el.style.fontSize = (16 + Math.random() * 16) + 'px';
+		document.body.appendChild(el);
+		setTimeout(function() { el.remove(); }, 6000);
+	}, 600);
+	// stop spawning after 2 mins (plenty for the experience)
+	setTimeout(function() { clearInterval(interval); }, 120000);
+}
+
+// ============================================
+// 🎊 HEART CONFETTI EXPLOSION
+// ============================================
+function shootHeartConfetti() {
+	if (typeof confetti === 'undefined') return;
+	var end = Date.now() + 2500;
+	var colors = ['#FF6B9D','#FF4477','#FF85A1','#FFB3C8','#FF2D6B'];
+	(function frame() {
+		confetti({
+			particleCount: 4,
+			angle: 60,
+			spread: 70,
+			origin: { x: 0 },
+			colors: colors,
+			shapes: ['circle'],
+			scalar: 1.2
+		});
+		confetti({
+			particleCount: 4,
+			angle: 120,
+			spread: 70,
+			origin: { x: 1 },
+			colors: colors,
+			shapes: ['circle'],
+			scalar: 1.2
+		});
+		if (Date.now() < end) requestAnimationFrame(frame);
+	}());
+}
+
+// ============================================
+// 🎆 FIREWORKS
+// ============================================
+function shootFireworks() {
+	if (typeof confetti === 'undefined') return;
+	var duration = 3000;
+	var end2 = Date.now() + duration;
+	var colors2 = ['#FF6B9D','#FFB3C8','#fff','#FF4477','#FF85A1'];
+	(function fireframe() {
+		confetti({
+			particleCount: 6,
+			angle: Math.random() * 360,
+			spread: 60,
+			origin: { x: Math.random(), y: Math.random() * 0.5 },
+			colors: colors2,
+			startVelocity: 30,
+			gravity: 0.5,
+			scalar: 1.1
+		});
+		if (Date.now() < end2) requestAnimationFrame(fireframe);
+	}());
+}
+
 
 
 

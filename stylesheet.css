@@ -1459,59 +1459,98 @@ audio {
 }
 
 /* ============================================
-   MOBILE RESPONSIVE
+   HEART CURSOR
+   ============================================ */
+* { cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%E2%9D%A4%EF%B8%8F%3C/text%3E%3C/svg%3E") 16 16, auto; }
+
+/* ============================================
+   FLOATING HEARTS (during music)
+   ============================================ */
+.float-heart {
+    position: fixed;
+    bottom: -60px;
+    font-size: 22px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 9998;
+    animation: rise_heart 4s ease-in forwards;
+}
+@keyframes rise_heart {
+    0%   { transform: translateY(0) scale(0.8); opacity: 0.8; }
+    80%  { opacity: 0.5; }
+    100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
+}
+
+/* ============================================
+   FIREWORKS canvas
+   ============================================ */
+#fireworks-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 99998;
+    display: none;
+}
+
+/* ============================================
+   MOBILE RESPONSIVE — FIRST HALF
    ============================================ */
 @media only screen and (max-width: 768px) {
 
-    /* Navbar buttons — smaller, wrap nicely */
+    /* ── Navbar: horizontally scrollable, clean ── */
     .navbar.navbar-fixed-bottom {
-        padding: 6px 4px;
+        padding: 6px 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+        text-align: center;
+    }
+    .navbar.navbar-fixed-bottom .row,
+    .navbar.navbar-fixed-bottom .col-md-6 {
+        display: inline-block !important;
+        float: none !important;
+        width: auto !important;
+        margin: 0 auto;
+        white-space: nowrap;
     }
     .btn-primary {
-        padding: 7px 10px !important;
+        display: inline-block !important;
+        padding: 8px 12px !important;
         font-size: 12px !important;
-        border-radius: 18px !important;
-        margin: 3px 2px !important;
+        border-radius: 20px !important;
+        margin: 0 3px !important;
+        white-space: nowrap;
     }
     #not_over {
-        font-size: 13px !important;
+        font-size: 12px !important;
     }
 
-    /* Message text — smaller on mobile */
-    .message {
-        margin-top: 120px;
-    }
-    .message p {
-        font-size: 24px;
-    }
+    /* ── Bulbs row ── */
+    .bulb { width: 36px; height: 36px; background-size: 36px 36px; }
+    .bulb-holder { height: 50px; }
 
-    /* Balloon letters */
-    .balloons h2 {
-        font-size: 38px;
-    }
+    /* ── Banner ── */
+    .bannar { max-width: 95%; }
+
+    /* ── Message ── */
+    .message { margin-top: 80px; }
+    .message p { font-size: 22px; }
+
+    /* ── Balloons ── */
     .balloons {
-        width: 70px;
-        height: 128px;
-        background-size: 70px 128px;
+        width: 60px;
+        height: 110px;
+        background-size: 60px 110px;
     }
+    .balloons h2 { font-size: 32px; }
 
-    /* Collage */
-    .collage-header h1 {
-        font-size: 48px;
-    }
-    .collage-sub {
-        font-size: 17px;
-        margin-bottom: 16px;
-    }
-    .collage-caption {
-        font-size: 22px;
-    }
-    .collage-end {
-        font-size: 16px;
-    }
+    /* ── Cake area ── */
+    .cake-cover { margin-top: 100px; }
 
-    /* Cake area */
-    .cake-cover {
-        margin-top: 120px;
-    }
+    /* ── Collage ── */
+    .collage-header h1 { font-size: 46px; }
+    .collage-sub { font-size: 16px; margin-bottom: 14px; }
+    .collage-caption { font-size: 20px; }
+    .collage-end { font-size: 15px; }
 }
