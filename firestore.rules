@@ -1,0 +1,100 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isPlanTierValid(planTier) {
+      return planTier is string && (planTier == '99' || planTier == '149' || planTier == '199');
+    }
+
+    function isVariationValid(variationId) {
+      return variationId is string && (variationId == 'classic' || variationId == 'gold' || variationId == 'midnight' || variationId == 'intimate');
+    }
+
+    function hasRequiredOrderKeys(data) {
+      return data.keys().hasAll([
+        'slug',
+        'planTier',
+        'variationId',
+        'customerName',
+        'customerWhatsapp',
+        'recipientName',
+        'senderName',
+        'wishCta',
+        'topMessage',
+        'letterLines',
+        'mediaItems',
+        'ownerUid',
+        'ownerEmail',
+        'createdAt',
+        'updatedAt',
+        'expiresAt'
+      ]);
+    }
+
+    function hasOnlyAllowedOrderKeys(data) {
+      return data.keys().hasOnly([
+        'slug',
+        'planTier',
+        'variationId',
+        'customerName',
+        'customerWhatsapp',
+        'recipientName',
+        'senderName',
+        'wishCta',
+        'topMessage',
+        'letterLines',
+        'mediaItems',
+        'ownerUid',
+        'ownerEmail',
+        'createdAt',
+        'updatedAt',
+        'expiresAt'
+      ]);
+    }
+
+    function isOrderShapeValid(data, slug) {
+      return hasRequiredOrderKeys(data)
+        && hasOnlyAllowedOrderKeys(data)
+        && data.slug == slug
+        && isPlanTierValid(data.planTier)
+        && isVariationValid(data.variationId)
+        && data.customerName is string
+        && data.customerWhatsapp is string
+        && data.recipientName is string
+        && data.senderName is string
+        && data.wishCta is string
+        && data.topMessage is string
+        && data.letterLines is list
+        && data.mediaItems is list
+        && data.ownerUid is string
+        && data.ownerEmail is string
+        && data.createdAt is int
+        && data.updatedAt is int
+        && data.expiresAt is int
+        && data.expiresAt > data.createdAt;
+    }
+
+    match /orders/{orderSlug} {
+      allow read: if true;
+
+      allow create: if isSignedIn()
+        && request.resource.data.ownerUid == request.auth.uid
+        && isOrderShapeValid(request.resource.data, orderSlug);
+
+      allow update: if isSignedIn()
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.createdAt == resource.data.createdAt
+        && isOrderShapeValid(request.resource.data, orderSlug);
+
+      allow delete: if isSignedIn() && resource.data.ownerUid == request.auth.uid;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

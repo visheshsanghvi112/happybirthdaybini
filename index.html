@@ -17,21 +17,171 @@
     <meta property="og:description" content="Wish you a very Happy Birthday">
     <!-- End of Facebook Meta Tags -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="stylesheet.css">
 	<link rel="stylesheet" type="text/css" href="loading.css">
-	<link href='https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Signika:wght@400;600&display=swap' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Signika:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet/less" href="cake.less">
+	<link rel="stylesheet" type="text/css" href="variations.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.1.0/less.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 </head>
 
 <body>
 	<div class="loading"></div>
 	<canvas id="fireworks-canvas"></canvas>
+	<button type="button" id="open_product_studio" class="product-studio-toggle">Launch Product Studio</button>
+	<div id="product_studio" class="product-studio" aria-hidden="true">
+		<div class="studio-shell">
+			<div class="studio-head">
+				<h2>Create Your Surprise</h2>
+				<button type="button" id="close_product_studio" class="studio-close">x</button>
+			</div>
+			<p class="studio-note">Upload media, choose a variation, preview instantly, and publish one shareable link.</p>
+			<div class="studio-steps" aria-hidden="true">
+				<span>1. Sign In</span>
+				<span>2. Personalize</span>
+				<span>3. Preview</span>
+				<span>4. Publish</span>
+			</div>
+			<!-- ACCOUNT CREATION SCREEN -->
+			<div class="studio-auth studio-auth-create" id="studio_auth_create">
+				<p class="studio-auth-title">Create Account</p>
+				<div class="studio-auth-grid">
+					<label>
+						<span>Email</span>
+						<input id="auth_email_create" type="email" placeholder="you@example.com" autocomplete="email">
+					</label>
+					<label>
+						<span>Password</span>
+						<input id="auth_password_create" type="password" placeholder="Minimum 6 characters" autocomplete="new-password">
+					</label>
+				</div>
+				<div class="studio-auth-actions">
+					<button type="button" id="auth_register" class="btn btn-primary">Create Account</button>
+					<button type="button" id="auth_to_signin" class="btn btn-default">Already have an account? Sign In →</button>
+				</div>
+				<p id="auth_status_create" class="auth-status"></p>
+			</div>
+
+			<!-- SIGN IN SCREEN -->
+			<div class="studio-auth studio-auth-signin" id="studio_auth_signin" style="display:none;">
+				<p class="studio-auth-title">Sign In</p>
+				<div class="studio-auth-grid">
+					<label>
+						<span>Email</span>
+						<input id="auth_email_signin" type="email" placeholder="you@example.com" autocomplete="email">
+					</label>
+					<label>
+						<span>Password</span>
+						<input id="auth_password_signin" type="password" placeholder="Your password" autocomplete="current-password">
+					</label>
+				</div>
+				<div class="studio-auth-actions">
+					<button type="button" id="auth_signin_submit" class="btn btn-primary">Sign In</button>
+					<button type="button" id="auth_to_create" class="btn btn-default">← New user? Create Account</button>
+				</div>
+				<p id="auth_status_signin" class="auth-status"></p>
+			</div>
+
+			<!-- AUTHENTICATED STATE -->
+			<div class="studio-auth studio-auth-success" id="studio_auth_success" style="display:none;">
+				<p class="studio-auth-title">✨ You're In!</p>
+				<p class="auth-status">Ready to create your surprise. Let's go.</p>
+				<div class="studio-auth-actions">
+					<button type="button" id="auth_signout" class="btn btn-default">Sign Out</button>
+				</div>
+			</div>
+			<form id="product_form" class="studio-form">
+				<p class="studio-section-title">Core Setup</p>
+				<div class="studio-grid">
+					<label>Plan
+						<select id="plan_tier" name="plan_tier" required>
+							<option value="99">Mini (Rs 99)</option>
+							<option value="149" selected>Classic (Rs 149)</option>
+							<option value="199">Signature (Rs 199)</option>
+						</select>
+					</label>
+					<label>Variation
+						<select id="variation_id" name="variation_id" required>
+							<option value="classic" selected>Classic Love</option>
+							<option value="gold">Golden Glow</option>
+							<option value="midnight">Midnight Neon</option>
+							<option value="intimate">Intimate Moment</option>
+						</select>
+					</label>
+					<label>Slug (optional)
+						<input id="order_slug" name="order_slug" type="text" placeholder="bini-birthday">
+					</label>
+					<label>Customer Name
+						<input id="customer_name" name="customer_name" type="text" placeholder="Who is placing this order?">
+					</label>
+					<label>Customer WhatsApp
+						<input id="customer_whatsapp" name="customer_whatsapp" type="text" placeholder="+91...">
+					</label>
+					<label>Recipient Name
+						<input id="recipient_name" name="recipient_name" type="text" placeholder="Bini" required>
+					</label>
+					<label>Sender Name
+						<input id="sender_name" name="sender_name" type="text" placeholder="Your name" required>
+					</label>
+					<label>Headline Button Text
+						<input id="wish_cta" name="wish_cta" type="text" placeholder="Happy Birthday Bini!">
+					</label>
+					<label>Top Message
+						<input id="top_message" name="top_message" type="text" placeholder="every moment with you is my favorite">
+					</label>
+				</div>
+				<p class="studio-section-title">Your Message</p>
+				<label>Letter Lines (one line = one slide)
+					<textarea id="letter_lines" name="letter_lines" rows="6" placeholder="Hey love...\nHappy Birthday...\nYou are amazing..."></textarea>
+				</label>
+				<p class="studio-section-title">Media</p>
+				<label>Upload Photos / Video
+					<input id="media_files" name="media_files" type="file" accept="image/*,video/*" multiple>
+				</label>
+				<div id="selected_media_preview" class="selected-media-preview"></div>
+				<div id="upload_status" class="upload-status">Choose files to preview them here.</div>
+				<p class="studio-section-title">Publish</p>
+				<div class="studio-actions">
+					<button type="submit" class="btn btn-primary">Preview</button>
+					<button type="button" id="save_order" class="btn btn-primary">Create/Update Slug Link</button>
+				</div>
+				<label>Shareable Link
+					<input id="share_link" type="text" readonly placeholder="Generated after creating slug link">
+				</label>
+				<div class="studio-actions">
+					<button type="button" id="copy_share_link" class="btn btn-primary">Copy Link</button>
+				</div>
+				<p class="terms-note">Live link policy: each order stays active for 72 hours from creation.</p>
+				<p id="studio_status" class="studio-status"></p>
+
+				<!-- PAYMENT SECTION -->
+				<div class="payment-section" id="payment_section">
+					<p class="studio-section-title">💳 Payment</p>
+					<div class="payment-card">
+						<p class="payment-amount">Amount due: <strong id="payment_amount_label">Rs 149</strong></p>
+						<p class="payment-upi">UPI: <span>7977282697@superyes</span></p>
+						<img
+							id="payment_qr"
+							class="payment-qr"
+							src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi%3A%2F%2Fpay%3Fpa%3D7977282697%40superyes%26pn%3DAyush%26am%3D149%26cu%3DINR"
+							alt="UPI QR Code"
+						>
+						<p class="payment-note">Scan with any UPI app (GPay, PhonePe, Paytm, etc.)</p>
+						<a id="payment_whatsapp" class="btn btn-primary payment-wa-btn" href="#" target="_blank" rel="noopener">
+							💬 I've paid — WhatsApp me
+						</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 	<audio class="song" controls loop>
         <source src="hbd.mp3"></source>
 	   Your browser isn't invited for super fun audio time.
@@ -145,6 +295,7 @@
 				<p>always and forever ❤️</p>
 			</div>
 		</div>
+		<div id="media_container" class="media-container"></div>
 		<div class="navbar navbar-fixed-bottom">
 			<div class="row">
 				<div class="col-md-6 text-center col-md-offset-3">
@@ -204,5 +355,10 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script src="config.js"></script>
+<script src="variations-intimate.js"></script>
 <script src="effect.js"></script>
 </html>

@@ -1,0 +1,168 @@
+/* ============================================
+   VARIATION: CLASSIC LOVE (default — pink/rose)
+   ============================================ */
+body.variation-classic {
+	background: #0a0010;
+}
+
+/* ============================================
+   VARIATION: GOLDEN GLOW
+   ============================================ */
+body.variation-gold {
+	background: #0d0800;
+	background-image:
+		radial-gradient(ellipse at 20% 50%, rgba(180,100,0,0.2) 0%, transparent 60%),
+		radial-gradient(ellipse at 80% 20%, rgba(120,60,0,0.18) 0%, transparent 60%);
+}
+body.variation-gold .peach-after {
+	animation: gold_alive 8s linear infinite;
+}
+@keyframes gold_alive {
+	0%,100% { background-color: #0d0800; }
+	50%     { background-color: #1a1000; }
+}
+body.variation-gold .navbar.navbar-fixed-bottom {
+	border-top-color: rgba(212,133,14,0.2) !important;
+}
+body.variation-gold .btn-primary {
+	background: rgba(212,133,14,0.2) !important;
+	border-color: rgba(212,133,14,0.5) !important;
+	box-shadow: 0 4px 15px rgba(212,133,14,0.25) !important;
+}
+body.variation-gold .btn-primary:hover {
+	background: rgba(212,133,14,0.55) !important;
+	box-shadow: 0 0 24px rgba(212,133,14,0.7) !important;
+}
+body.variation-gold .message p {
+	color: #ffd580;
+	text-shadow: 0 0 24px rgba(255,180,0,0.4);
+}
+body.variation-gold .collage-header h1 { color: #ffc107; }
+body.variation-gold .collage-caption   { color: #ffc107; }
+body.variation-gold .collage-sub,
+body.variation-gold .collage-end       { color: rgba(255,220,120,0.65); }
+body.variation-gold #photo_collage {
+	background: linear-gradient(135deg, #0d0800 0%, #1f1200 50%, #0d0800 100%);
+}
+body.variation-gold .cdot.active {
+	background: #ffc107;
+	box-shadow: 0 0 10px rgba(255,193,7,0.9);
+}
+body.variation-gold .type-cursor { color: #ffc107; }
+body.variation-gold #close_collage {
+	border-color: rgba(255,193,7,0.5);
+	color: #ffc107;
+}
+body.variation-gold #close_collage:hover {
+	background: #ffc107;
+	color: #000;
+}
+
+/* ============================================
+   VARIATION: MIDNIGHT NEON
+   ============================================ */
+body.variation-midnight {
+	background: #020617;
+	background-image:
+		radial-gradient(ellipse at 30% 60%, rgba(0,60,180,0.2) 0%, transparent 60%),
+		radial-gradient(ellipse at 70% 20%, rgba(100,0,220,0.15) 0%, transparent 60%);
+}
+body.variation-midnight .peach-after {
+	animation: midnight_alive 8s linear infinite;
+}
+@keyframes midnight_alive {
+	0%,100% { background-color: #020617; }
+	50%     { background-color: #050d2a; }
+}
+body.variation-midnight .navbar.navbar-fixed-bottom {
+	border-top-color: rgba(95,168,255,0.15) !important;
+}
+body.variation-midnight .btn-primary {
+	background: rgba(31,79,160,0.2) !important;
+	border-color: rgba(95,168,255,0.4) !important;
+	box-shadow: 0 4px 15px rgba(31,79,160,0.25) !important;
+}
+body.variation-midnight .btn-primary:hover {
+	background: rgba(31,79,160,0.55) !important;
+	box-shadow: 0 0 24px rgba(95,168,255,0.7) !important;
+}
+body.variation-midnight .message p {
+	color: #a0c4ff;
+	text-shadow: 0 0 24px rgba(95,168,255,0.3);
+}
+body.variation-midnight .collage-header h1 { color: #5fa8ff; }
+body.variation-midnight .collage-caption   { color: #5fa8ff; }
+body.variation-midnight .collage-sub,
+body.variation-midnight .collage-end       { color: rgba(185,214,255,0.65); }
+body.variation-midnight #photo_collage {
+	background: linear-gradient(135deg, #020617 0%, #0b1229 50%, #020617 100%);
+}
+body.variation-midnight .cdot.active {
+	background: #5fa8ff;
+	box-shadow: 0 0 10px rgba(95,168,255,0.9);
+}
+body.variation-midnight .type-cursor { color: #5fa8ff; }
+body.variation-midnight #close_collage {
+	border-color: rgba(95,168,255,0.4);
+	color: #5fa8ff;
+}
+body.variation-midnight #close_collage:hover {
+	background: #5fa8ff;
+	color: #000;
+}
+body.variation-midnight .balloons h2 {
+	color: #5fa8ff;
+	text-shadow: 0 0 20px rgba(95,168,255,0.8);
+}
+
+/* ============================================
+   VARIATION: INTIMATE MOMENT
+   ============================================ */
+body.variation-intimate {
+	background: #080008;
+	background-image:
+		radial-gradient(ellipse at 50% 50%, rgba(100,0,60,0.25) 0%, transparent 70%);
+}
+body.variation-intimate .peach-after {
+	animation: intimate_alive 10s linear infinite;
+}
+@keyframes intimate_alive {
+	0%,100% { background-color: #080008; }
+	50%     { background-color: #120010; }
+}
+body.variation-intimate .navbar.navbar-fixed-bottom {
+	border-top-color: rgba(200,50,150,0.2) !important;
+}
+body.variation-intimate .btn-primary {
+	background: rgba(180,30,120,0.2) !important;
+	border-color: rgba(220,80,160,0.5) !important;
+	box-shadow: 0 4px 15px rgba(180,30,120,0.25) !important;
+}
+body.variation-intimate .btn-primary:hover {
+	background: rgba(180,30,120,0.55) !important;
+	box-shadow: 0 0 24px rgba(220,80,160,0.7) !important;
+}
+body.variation-intimate .message p {
+	color: #f0a0d0;
+	text-shadow: 0 0 24px rgba(220,80,160,0.4);
+}
+body.variation-intimate .collage-header h1 { color: #e060b0; }
+body.variation-intimate .collage-caption   { color: #e060b0; }
+body.variation-intimate .collage-sub,
+body.variation-intimate .collage-end       { color: rgba(240,160,210,0.65); }
+body.variation-intimate #photo_collage {
+	background: linear-gradient(135deg, #080008 0%, #180010 50%, #080008 100%);
+}
+body.variation-intimate .cdot.active {
+	background: #e060b0;
+	box-shadow: 0 0 10px rgba(220,80,160,0.9);
+}
+body.variation-intimate .type-cursor { color: #e060b0; }
+body.variation-intimate #close_collage {
+	border-color: rgba(220,80,160,0.4);
+	color: #e060b0;
+}
+body.variation-intimate #close_collage:hover {
+	background: #e060b0;
+	color: #fff;
+}
